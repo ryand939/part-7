@@ -77,11 +77,15 @@ namespace part_7
 		}
 
 		private void btnRemoveNumber_Click(object sender, EventArgs e)
-		{
-			lblStatus.Text = $"Status: Number {numbers[listNumbers.SelectedIndex]} removed.";
-			numbers.RemoveAt(listNumbers.SelectedIndex);
-			listNumbers.DataSource = null;
-			listNumbers.DataSource = numbers;
+		{//need to check if something in list is selected before it tries to remove it
+           if(listNumbers.SelectedIndex > 0)
+            {
+			    lblStatus.Text = $"Status: Number {numbers[listNumbers.SelectedIndex]} removed.";
+			    numbers.RemoveAt(listNumbers.SelectedIndex);
+			    listNumbers.DataSource = null;
+			    listNumbers.DataSource = numbers;
+
+            }
 
 		}
 
@@ -93,6 +97,24 @@ namespace part_7
 			lblStatus.Text = $"Status: All numbers have been removed.";
 		}
 
+        private void BtnAddHero_Click(object sender, EventArgs e)
+        {
+            heroes.Add(txtAddHero.Text);
+            listHeroes.DataSource = null;
+            listHeroes.DataSource = heroes;
+        }
 
-	}
+        private void BtnRemoveHero_Click(object sender, EventArgs e)
+        {
+            heroes.Remove(txtRemoveHero.Text);
+            listHeroes.DataSource = null;
+            listHeroes.DataSource = heroes;
+
+        }
+
+        private void ListNumbers_SelectedValueChanged(object sender, EventArgs e)
+        {
+            lblRemoveNum.Text = $"Selected number \r\nto remove: {listNumbers.SelectedItem}";
+        }
+    }
 }
