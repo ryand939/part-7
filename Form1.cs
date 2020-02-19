@@ -141,13 +141,14 @@ namespace part_7
 
         private void BtnAddHero_Click(object sender, EventArgs e)
         {
+            string userEntry = txtAddHero.Text;
 			if(txtAddHero.Text != "")
 			{
 				heroes.Add(txtAddHero.Text);
 				heroes = heroes.Distinct().ToList();
 				listHeroes.DataSource = null;
 				listHeroes.DataSource = heroes;
-
+                lblStatus.Text = $"Status: The hero \"{userEntry}\" has been added.";
 			}
 
 
@@ -166,12 +167,13 @@ namespace part_7
 				heroes.RemoveAt(indexOfHero);
 				listHeroes.DataSource = null;
 				listHeroes.DataSource = heroes;
-			}
+                lblStatus.Text = $"Status: The hero \"{userEntry}\" has been removed.";
+            }
 			else
 			{
 				lblStatus.Text = $"Status: The hero \"{userEntry}\" does not exist in the list.";
-				txtRemoveHero.Text = "";
 			}
+            txtRemoveHero.Text = "";
         }
 
         private void ListNumbers_SelectedValueChanged(object sender, EventArgs e)
