@@ -109,7 +109,7 @@ namespace part_7
 				btnRemoveNumber.Enabled = false;
 				button1.Enabled = false;
 			}
-			else
+			else 
 			{
 
 				btnRemoveNumber.Enabled = true;
@@ -155,6 +155,8 @@ namespace part_7
 			txtAddHero.Text = "";
 		}
 
+
+
         private void BtnRemoveHero_Click(object sender, EventArgs e)
         {
 			string userEntry = txtRemoveHero.Text;
@@ -176,6 +178,8 @@ namespace part_7
             txtRemoveHero.Text = "";
         }
 
+
+
         private void ListNumbers_SelectedValueChanged(object sender, EventArgs e)
         {
 			if (listNumbers.SelectedItem == null)
@@ -183,6 +187,7 @@ namespace part_7
 
 				lblRemoveNum.Text = "No selection \r\nhas been made.";
 				btnRemoveNumber.Enabled = false;
+
 			}
 			else
 			{
