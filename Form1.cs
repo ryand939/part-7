@@ -38,19 +38,35 @@ namespace part_7
 
 		private void btnSortNumbers_Click(object sender, EventArgs e)
 		{
+			if(listNumbers.Items.Count > 0)
+			{
 			numbers.Sort();
 			listNumbers.DataSource = null;
 			listNumbers.DataSource = numbers;
 			lblStatus.Text = "Status: Numbers have been sorted lowest to highest.";
+			}
+			else
+			{
+				lblStatus.Text = "Status: There are no numbers to sort.";
+			}
+
 
 		}
 
 		private void btnSortHeroes_Click(object sender, EventArgs e)
 		{
+			if(listHeroes.Items.Count > 0)
+			{
+
 			heroes.Sort();
 			listHeroes.DataSource = null;
 			listHeroes.DataSource = heroes;
 			lblStatus.Text = "Status: Heroes have been sorted alphabetically.";
+			}
+			else
+			{
+				lblStatus.Text = "Status: There are no heroes to sort.";
+			}
 		}
 
 		private void btnNewList_Click(object sender, EventArgs e)
@@ -63,6 +79,9 @@ namespace part_7
 			listNumbers.DataSource = null;
 			listNumbers.DataSource = numbers;
 			lblStatus.Text = "Status: New numbers list.";
+			btnRemoveNumber.Enabled = true;
+			btnRemoveNumber.Enabled = true;
+			button1.Enabled = true;
 
 		}
 
@@ -78,14 +97,24 @@ namespace part_7
 
 		private void btnRemoveNumber_Click(object sender, EventArgs e)
 		{//need to check if something in list is selected before it tries to remove it
-           if(listNumbers.SelectedIndex > 0)
+           if(listNumbers.SelectedIndex >= 0)
             {
 			    lblStatus.Text = $"Status: Number {numbers[listNumbers.SelectedIndex]} removed.";
 			    numbers.RemoveAt(listNumbers.SelectedIndex);
 			    listNumbers.DataSource = null;
 			    listNumbers.DataSource = numbers;
-
             }
+		   if(listNumbers.Items.Count == 0)
+			{
+				btnRemoveNumber.Enabled = false;
+				button1.Enabled = false;
+			}
+			else
+			{
+
+				btnRemoveNumber.Enabled = true;
+				button1.Enabled = true;
+			}
 
 		}
 
@@ -95,26 +124,79 @@ namespace part_7
 			listNumbers.DataSource = null;
 			listNumbers.DataSource = numbers;
 			lblStatus.Text = $"Status: All numbers have been removed.";
+			btnRemoveNumber.Enabled = false;
+
+			if (listNumbers.Items.Count == 0)
+			{
+				btnRemoveNumber.Enabled = false;
+				button1.Enabled = false;
+			}
+			else
+			{
+
+				btnRemoveNumber.Enabled = true;
+				button1.Enabled = true;
+			}
 		}
 
         private void BtnAddHero_Click(object sender, EventArgs e)
         {
-            heroes.Add(txtAddHero.Text);
-            listHeroes.DataSource = null;
-            listHeroes.DataSource = heroes;
-        }
+			if(txtAddHero.Text != "")
+			{
+				heroes.Add(txtAddHero.Text);
+				heroes = heroes.Distinct().ToList();
+				listHeroes.DataSource = null;
+				listHeroes.DataSource = heroes;
+
+			}
+
+
+			txtAddHero.Text = "";
+		}
 
         private void BtnRemoveHero_Click(object sender, EventArgs e)
         {
-            heroes.Remove(txtRemoveHero.Text);
-            listHeroes.DataSource = null;
-            listHeroes.DataSource = heroes;
+			string userEntry = txtRemoveHero.Text;
+			List<string> heroesLower = heroes.ConvertAll(d => d.ToLower()).ToList();
+			if (heroesLower.Contains(txtRemoveHero.Text.ToLower()))
+			{
 
+				int indexOfHero = heroesLower.IndexOf(txtRemoveHero.Text.ToLower());
+				heroesLower.RemoveAt(indexOfHero);
+				heroes.RemoveAt(indexOfHero);
+				listHeroes.DataSource = null;
+				listHeroes.DataSource = heroes;
+			}
+			else
+			{
+				lblStatus.Text = $"Status: The hero \"{userEntry}\" does not exist in the list.";
+				txtRemoveHero.Text = "";
+			}
         }
 
         private void ListNumbers_SelectedValueChanged(object sender, EventArgs e)
         {
-            lblRemoveNum.Text = $"Selected number \r\nto remove: {listNumbers.SelectedItem}";
+			if (listNumbers.SelectedItem == null)
+			{
+
+				lblRemoveNum.Text = "No selection \r\nhas been made.";
+				btnRemoveNumber.Enabled = false;
+			}
+			else
+			{
+				btnRemoveNumber.Enabled = true;
+				lblRemoveNum.Text = $"Selected number \r\nto remove: {listNumbers.SelectedItem}";
+			}
         }
-    }
+
+		private void listNumbers_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void txtRemoveHero_TextChanged(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
