@@ -19,6 +19,7 @@ namespace part_7
 		//declare random number generator
 		Random random = new Random();
 
+
 		public Form1()
 		{
 			InitializeComponent();
